@@ -211,6 +211,10 @@ impl<'a> Webpage<'a> {
         }
 
         for (path, data) in self.files.iter() {
+            let full_path = folder_path.join(path);
+            if let Some(parent) = full_path.parent() {
+                let _ = fs::create_dir_all(parent);
+            }
             fs::write(folder_path.join(path), data).unwrap();
         }
 
